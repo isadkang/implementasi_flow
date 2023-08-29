@@ -1,14 +1,19 @@
 <?php
-$bilangan = 0;
-$satuan = 0;
-$puluhan = 0;
-$ratusan = 0;
+$suhuFahrenheit = 0;
+$suhuCelcius = "";
 
 if (isset($_POST['submit'])) {
-    $bilangan = intval($_POST['bilangan']);
-    $satuan = $bilangan % 10;
-    $puluhan = ($bilangan / 10) % 10;
-    $ratusan = ($bilangan / 100) % 10;
+    $suhuFahrenheit = $_POST['suhuFahrenheit'];
+
+    $suhuCelcius = $suhuFahrenheit / 33.8;
+
+    if ($suhuCelcius > 30) {
+        $cuaca = "Panas";
+    } else if ($suhuCelcius < 10) {
+        $cuaca = "Dingin";
+    } else {
+        $cuaca = "Normal";
+    }
 }
 ?>
 
@@ -18,7 +23,7 @@ if (isset($_POST['submit'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Soal 8</title>
+    <title>Konversi Suhu</title>
 </head>
 <style>
     html,
@@ -86,19 +91,17 @@ if (isset($_POST['submit'])) {
 <body>
     <div class="container">
         <div class="box">
-            <h1>Soal 8 - Implementasi Flowchart</h1>
+            <h1>Konversi Suhu Fahrenheit ke Celcius</h1>
             <form action="" method="post">
-                <label for="bilangan">Masukkan Bilangan (bilangan): </label>
-                <input type="number" name="bilangan" placeholder="bilangan..." required>
+                <label for="suhuFahrenheit">Masukkan Suhu Fahrenheit: </label>
+                <input type="number" step="any" name="suhuFahrenheit" placeholder="Fahrenheit..." required>
                 <input type="submit" value="Konversi" id="button" name="submit">
             </form>
-            <h2><?php
-                if (isset($_POST['submit'])) {
-                    echo "Bilangan Satuan " . $satuan . "<br>";
-                    echo "Bilangan Puluhan " . $puluhan . "<br>";
-                    echo "Bilangan Ratusan " . $ratusan;
-                }
-                ?></h2>
+
+            <?php if (isset($_POST['submit'])) : ?>
+                <h2>Suhu Celcius: <?php echo number_format($suhuCelcius, 2) ?>°C</h2>
+                <h2>Cuaca: <?php echo $cuaca ?></h2>
+            <?php endif; ?>
         </div>
     </div>
 </body>

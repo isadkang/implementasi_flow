@@ -1,14 +1,31 @@
 <?php
-$bilangan = 0;
-$satuan = 0;
-$puluhan = 0;
-$ratusan = 0;
+$pabpScore = 0;
+$mathScore = 0;
+$dpkScore = 0;
 
 if (isset($_POST['submit'])) {
-    $bilangan = intval($_POST['bilangan']);
-    $satuan = $bilangan % 10;
-    $puluhan = ($bilangan / 10) % 10;
-    $ratusan = ($bilangan / 100) % 10;
+    $pabpScore = intval($_POST['pabpScore']);
+    $mathScore = intval($_POST['mathScore']);
+    $dpkScore = intval($_POST['dpkScore']);
+}
+
+$totalScore = $pabpScore + $mathScore + $dpkScore;
+$averageScore = $totalScore / 3;
+
+$grade = "";
+
+if ($averageScore >= 80 && $averageScore <= 100) {
+    $grade = "A";
+} elseif ($averageScore >= 75 && $averageScore < 80) {
+    $grade = "B";
+} elseif ($averageScore >= 65 && $averageScore < 75) {
+    $grade = "C";
+} elseif ($averageScore >= 45 && $averageScore < 65) {
+    $grade = "D";
+} elseif ($averageScore >= 0 && $averageScore < 45) {
+    $grade = "E";
+} else {
+    $grade = "K";
 }
 ?>
 
@@ -16,9 +33,7 @@ if (isset($_POST['submit'])) {
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Soal 8</title>
+    <title>Soal 10 - Flowchart</title>
 </head>
 <style>
     html,
@@ -86,19 +101,22 @@ if (isset($_POST['submit'])) {
 <body>
     <div class="container">
         <div class="box">
-            <h1>Soal 8 - Implementasi Flowchart</h1>
+            <h1>Calculate Average Grade</h1>
             <form action="" method="post">
-                <label for="bilangan">Masukkan Bilangan (bilangan): </label>
-                <input type="number" name="bilangan" placeholder="bilangan..." required>
-                <input type="submit" value="Konversi" id="button" name="submit">
+                <label for="pabpScore">PABP Score:</label>
+                <input type="number" name="pabpScore" required>
+
+                <label for="mathScore">Matematika Score:</label>
+                <input type="number" name="mathScore" required>
+
+                <label for="dpkScore">DPK Score:</label>
+                <input type="number" name="dpkScore" required>
+
+                <input type="submit" name="submit" id="button" value="Calculate Grade">
             </form>
-            <h2><?php
-                if (isset($_POST['submit'])) {
-                    echo "Bilangan Satuan " . $satuan . "<br>";
-                    echo "Bilangan Puluhan " . $puluhan . "<br>";
-                    echo "Bilangan Ratusan " . $ratusan;
-                }
-                ?></h2>
+
+            <p>Average Score: <?php echo $averageScore; ?></p>
+            <p>Grade: <?php echo $grade; ?></p>
         </div>
     </div>
 </body>
